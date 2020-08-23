@@ -2,6 +2,7 @@ package com.fjs.myblog.web;
 
 import com.fjs.myblog.entity.User;
 import com.fjs.myblog.service.UserService;
+import com.fjs.myblog.util.MD5Utils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -32,7 +33,7 @@ public class LoginController {
                         @RequestParam String password,
                         HttpSession session,
                         RedirectAttributes attributes) {
-        User user = userService.checkUser(username, password);
+        User user = userService.checkUser(username, MD5Utils.code(password));
         if (user != null) {
             user.setPassword(null);
             session.setAttribute("user", user);
